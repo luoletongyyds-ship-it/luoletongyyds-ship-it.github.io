@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>罗乐桐 · AI 社媒策划 / 海外社媒运营</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAF7;
+    --bg-2:#F4F4EE;
+    --surface:#FFFFFF;
+    --surface-2:#FBFBF8;
+    --ink:#0A0D14;
+    --ink-2:rgba(10,13,20,.62);
+    --ink-3:rgba(10,13,20,.38);
+    --line:rgba(10,13,20,.08);
+    --line-2:rgba(10,13,20,.14);
+    --accent:#0A0D14;
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.7;font-size:16px;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  .en{font-family:"Space Grotesk","Noto Sans SC",sans-serif;}
+  ::selection{background:rgba(10,13,20,.85);color:#fff;}
+  a{text-decoration:none;color:inherit;}
+
+  /* ============ 彩色光晕背景(lightspark 风) ============ */
+  .bg-layer{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:var(--bg);}
+  .bg-layer::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(10,13,20,.045) 1px,transparent 1px);background-size:22px 22px;opacity:.45;}
+  .orb{position:absolute;border-radius:50%;filter:blur(110px);opacity:.62;}
+  .orb-1{width:520px;height:520px;background:radial-gradient(circle,#7BD389 0%,transparent 70%);top:-160px;left:-120px;animation:float1 22s ease-in-out infinite;}
+  .orb-2{width:480px;height:480px;background:radial-gradient(circle,#6EA8FF 0%,transparent 70%);top:18%;right:-180px;animation:float2 26s ease-in-out infinite;}
+  .orb-3{width:440px;height:440px;background:radial-gradient(circle,#B89AFF 0%,transparent 70%);top:55%;left:-140px;animation:float1 30s ease-in-out infinite;}
+  .orb-4{width:380px;height:380px;background:radial-gradient(circle,#FFA87C 0%,transparent 70%);top:42%;right:8%;animation:float2 24s ease-in-out infinite;}
+  .orb-5{width:340px;height:340px;background:radial-gradient(circle,#FFD86E 0%,transparent 70%);bottom:-80px;left:30%;animation:float1 28s ease-in-out infinite;}
+  .orb-6{width:300px;height:300px;background:radial-gradient(circle,#5CE0E6 0%,transparent 70%);bottom:18%;right:-100px;animation:float2 20s ease-in-out infinite;}
+  .orb-7{width:260px;height:260px;background:radial-gradient(circle,#FF9EC4 0%,transparent 70%);top:30%;left:38%;animation:float1 32s ease-in-out infinite;opacity:.45;}
+  @keyframes float1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(60px,40px) scale(1.05)}}
+  @keyframes float2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-50px,-50px) scale(1.08)}}
+
+  /* ============ Nav ============ */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .4s,border-color .4s,backdrop-filter .4s;border-bottom:1px solid transparent;}
+  nav.scrolled{background:rgba(250,250,247,.72);backdrop-filter:blur(20px) saturate(180%);border-bottom-color:var(--line);}
+  .nav-inner{max-width:1240px;margin:0 auto;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.5px;font-size:15px;}
+  .nav-logo .mark{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;background:var(--ink);color:#fff;font-size:12px;font-weight:700;}
+  .nav-links{display:flex;gap:34px;font-size:14px;color:var(--ink-2);}
+  .nav-links a{position:relative;transition:color .25s;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1.5px;background:var(--ink);transition:width .3s var(--ease);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{background:var(--ink);color:#fff;font-size:13.5px;font-weight:700;padding:9px 20px;border-radius:9px;transition:transform .25s var(--ease),box-shadow .25s;}
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(10,13,20,.18);}
+  .nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
+  .nav-burger span{width:22px;height:2px;background:var(--ink);border-radius:2px;transition:.3s;}
+
+  /* ============ Hero ============ */
+  .wrap{max-width:1240px;margin:0 auto;padding:0 32px;position:relative;z-index:2;}
+  .hero{min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding-top:140px;padding-bottom:80px;}
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:10px;width:max-content;
+    font-size:13px;letter-spacing:2px;color:var(--ink-2);
+    border:1px solid var(--line-2);background:rgba(255,255,255,.6);backdrop-filter:blur(10px);
+    padding:8px 18px;border-radius:100px;margin-bottom:30px;
+  }
+  .hero-badge .pulse{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 12px rgba(34,197,94,.6);animation:pulse 2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .hero h1{
+    font-size:clamp(48px,8vw,108px);line-height:1.04;font-weight:900;letter-spacing:-.03em;
+    color:var(--ink);max-width:980px;
+  }
+  .hero h1 .it{font-style:italic;font-weight:700;}
+  .hero h1 .grad{
+    background:linear-gradient(120deg,#0A0D14 0%,#6EA8FF 60%,#B89AFF 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .hero-sub{margin-top:32px;font-size:clamp(16px,2vw,20px);color:var(--ink-2);max-width:640px;line-height:1.8;}
+  .hero-sub b{color:var(--ink);font-weight:500;}
+  .hero-cta{margin-top:44px;display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:700;padding:15px 32px;border-radius:13px;transition:transform .25s var(--ease),box-shadow .25s;cursor:pointer;border:none;}
+  .btn-primary{background:var(--ink);color:#fff;box-shadow:0 8px 28px rgba(10,13,20,.18);}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(10,13,20,.26);}
+  .btn-ghost{border:1.5px solid var(--line-2);color:var(--ink);background:rgba(255,255,255,.5);backdrop-filter:blur(8px);}
+  .btn-ghost:hover{border-color:var(--ink);background:#fff;transform:translateY(-3px);}
+  .btn .arr{transition:transform .3s var(--ease);}
+  .btn:hover .arr{transform:translateX(4px);}
+
+  .hero-metrics{margin-top:80px;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);padding-top:34px;gap:20px;}
+  .hm .v{font-family:"Space Grotesk";font-size:clamp(30px,4.4vw,48px);font-weight:700;letter-spacing:-.03em;color:var(--ink);line-height:1;}
+  .hm .v em{font-style:normal;background:linear-gradient(120deg,#6EA8FF,#B89AFF);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .hm .l{font-size:13px;color:var(--ink-3);margin-top:8px;letter-spacing:.3px;}
+
+  /* ============ Section common ============ */
+  section{position:relative;z-index:2;padding:130px 0;}
+  .sec-head{margin-bottom:72px;}
+  .sec-index{font-family:"Space Grotesk";font-size:14px;font-weight:700;color:var(--ink-3);letter-spacing:3px;margin-bottom:16px;}
+  .sec-head h2{font-size:clamp(34px,5vw,64px);font-weight:800;letter-spacing:-.03em;line-height:1.12;color:var(--ink);}
+  .sec-head h2 .it{font-style:italic;font-weight:700;}
+  .sec-head .lead{margin-top:20px;font-size:17px;color:var(--ink-2);max-width:700px;line-height:1.8;}
+
+  /* ============ Reveal ============ */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:calc(var(--i,0)*90ms);}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* ============ Cards ============ */
+  .cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .cap-card{
+    position:relative;background:var(--surface);border:1px solid var(--line);
+    border-radius:22px;padding:42px 36px;overflow:hidden;transition:transform .4s var(--ease),border-color .4s,box-shadow .4s;
+  }
+  .cap-card:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 24px 60px rgba(10,13,20,.08);}
+  .cap-card::before{content:"";position:absolute;inset:0;border-radius:22px;background:radial-gradient(500px circle at var(--mx,50%) var(--my,0%),rgba(110,168,255,.18),transparent 50%);opacity:0;transition:opacity .4s;pointer-events:none;}
+  .cap-card:hover::before{opacity:1;}
+  .cap-num{font-family:"Space Grotesk";font-size:13px;font-weight:700;color:var(--ink-3);letter-spacing:2px;}
+  .cap-card h3{font-size:24px;font-weight:700;margin-top:18px;letter-spacing:-.01em;}
+  .cap-card p{font-size:15px;color:var(--ink-2);margin-top:14px;line-height:1.8;}
+  .cap-card .tags{margin-top:22px;display:flex;flex-wrap:wrap;gap:8px;}
+  .cap-card .tags span{font-size:12px;color:var(--ink-2);border:1px solid var(--line);border-radius:7px;padding:5px 13px;background:var(--bg-2);}
+
+  /* ============ Feature ============ */
+  .feat{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  .feat-item{
+    position:relative;background:var(--surface);border:1px solid var(--line);
+    border-radius:22px;padding:38px;overflow:hidden;
+  }
+  .feat-item .idx{font-family:"Space Grotesk";font-size:13px;font-weight:700;color:var(--ink-3);letter-spacing:2px;}
+  .feat-item h3{font-size:22px;font-weight:700;margin-top:16px;letter-spacing:-.01em;}
+  .feat-item p{font-size:14.5px;color:var(--ink-2);margin-top:12px;line-height:1.8;}
+  .feat-item .metric{font-family:"Space Grotesk";font-size:38px;font-weight:700;color:var(--ink);margin-top:22px;line-height:1;}
+  .feat-item .metric em{font-style:normal;background:linear-gradient(120deg,#6EA8FF,#B89AFF);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .feat-item .metric small{font-size:13px;color:var(--ink-3);font-weight:400;font-family:"Noto Sans SC";margin-left:8px;}
+
+  /* ============ Project cards ============ */
+  .proj-list{display:flex;flex-direction:column;gap:20px;}
+  .proj-card{
+    position:relative;display:grid;grid-template-columns:1fr;background:var(--surface);
+    border:1px solid var(--line);border-radius:22px;padding:40px 44px;overflow:hidden;
+    transition:transform .4s var(--ease),border-color .4s,box-shadow .4s;
+  }
+  .proj-card:hover{transform:translateY(-4px);border-color:var(--line-2);box-shadow:0 24px 60px rgba(10,13,20,.07);}
+  .proj-card::before{content:"";position:absolute;inset:0;border-radius:22px;background:radial-gradient(600px circle at var(--mx,50%) var(--my,0%),rgba(110,168,255,.14),transparent 50%);opacity:0;transition:opacity .4s;pointer-events:none;}
+  .proj-card:hover::before{opacity:1;}
+  .proj-card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;}
+  .proj-card .no{font-family:"Space Grotesk";font-size:13px;font-weight:700;color:var(--ink-3);letter-spacing:1.5px;white-space:nowrap;padding-top:6px;}
+  .proj-card h3{font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1.35;color:var(--ink);}
+  .proj-card .role{margin-top:10px;font-size:14px;color:var(--ink-3);}
+  .proj-card .role b{color:var(--ink-2);font-weight:500;}
+  .proj-card .badge{font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--ink);border:1px solid var(--ink);border-radius:100px;padding:5px 14px;white-space:nowrap;background:var(--bg);}
+  .proj-card .badge.wf{color:var(--ink-2);border-color:var(--line-2);}
+  .proj-flow{margin-top:26px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  .pf{background:var(--bg-2);border-radius:14px;padding:20px 22px;border:1px solid var(--line);}
+  .pf b{display:block;font-size:11px;letter-spacing:1.5px;color:var(--ink-3);margin-bottom:10px;text-transform:uppercase;font-family:"Space Grotesk";font-weight:700;}
+  .pf span{font-size:14px;color:var(--ink-2);line-height:1.75;display:block;}
+  .proj-intro{margin-top:20px;font-size:14.5px;color:var(--ink-2);line-height:1.85;}
+  .proj-intro b{color:var(--ink);font-weight:600;}
+  .proj-intro ul{margin-top:10px;list-style:none;display:flex;flex-direction:column;gap:7px;}
+  .proj-intro li{padding-left:18px;position:relative;font-size:13.5px;color:var(--ink-2);line-height:1.75;}
+  .proj-intro li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--ink);opacity:.45;}
+  .proj-gallery{margin-top:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .proj-gallery figure{margin:0;position:relative;}
+  .proj-gallery figcaption{margin-top:8px;font-size:12px;color:var(--ink-3);font-family:"Space Grotesk";letter-spacing:.3px;}
+  .proj-gallery .ph{
+  cursor:zoom-in;overflow:hidden;border-radius:14px;
+  background:linear-gradient(135deg,#f5f5f0 0%,#e8e8e3 100%);
+  position:relative;
+  padding:6px;
+}
+.img-soft{
+  width:100%;height:auto;display:block;border-radius:10px;
+  box-shadow:0 0 0 1px rgba(10,13,20,.05),0 8px 24px rgba(10,13,20,.08);
+  filter:contrast(1.04) saturate(.92);
+  transition:transform .55s var(--ease),filter .55s var(--ease),box-shadow .55s var(--ease);
+}
+.ph:hover .img-soft{transform:scale(1.05);filter:contrast(1.05) saturate(.95);box-shadow:0 0 0 1px rgba(10,13,20,.08),0 16px 40px rgba(10,13,20,.14);}
+  .proj-card .foot{margin-top:26px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
+  .proj-card .tech{font-size:13px;color:var(--ink-3);}
+  .proj-card .link{font-size:14px;font-weight:700;color:var(--ink);display:inline-flex;align-items:center;gap:8px;background:none;border:none;cursor:pointer;}
+  .proj-card .link:hover .arr{transform:translateX(4px);}
+  .proj-card .link .arr{transition:transform .3s var(--ease);}
+
+  /* ============ Stack ============ */
+  .skill-groups{display:flex;flex-direction:column;gap:16px;}
+  .skill-row{display:grid;grid-template-columns:140px 1fr;gap:24px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line);}
+  .skill-row:last-child{border-bottom:none;}
+  .skill-label{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:.5px;}
+  .skill-chips{display:flex;flex-wrap:wrap;gap:10px;}
+  .skill-chips span{font-size:13.5px;color:var(--ink-2);border:1px solid var(--line);border-radius:10px;padding:8px 16px;transition:.25s;background:var(--surface);}
+  .skill-chips span:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-2px);}
+
+  /* ============ Timeline ============ */
+  .tl{display:flex;flex-direction:column;}
+  .tl-item{display:grid;grid-template-columns:220px 1fr;gap:30px;padding:38px 0;border-bottom:1px solid var(--line);}
+  .tl-item:last-child{border-bottom:none;}
+  .tl-date{font-family:"Space Grotesk";font-size:15px;font-weight:600;color:var(--ink-2);padding-top:4px;}
+  .tl-body h3{font-size:22px;font-weight:700;letter-spacing:-.01em;}
+  .tl-body .sub{font-size:14px;color:var(--ink-3);margin-top:4px;}
+  .tl-body ul{margin-top:18px;list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .tl-body li{font-size:14.5px;color:var(--ink-2);padding-left:22px;position:relative;line-height:1.75;}
+  .tl-body li::before{content:"";position:absolute;left:0;top:10px;width:8px;height:8px;border-radius:50%;background:var(--ink);}
+
+  /* ============ Results ============ */
+  .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  .result-card{
+    position:relative;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:44px;overflow:hidden;
+  }
+  .result-card .big{font-family:"Space Grotesk";font-size:64px;font-weight:700;letter-spacing:-.04em;color:var(--ink);line-height:1;}
+  .result-card .big em{font-style:normal;background:linear-gradient(120deg,#6EA8FF,#B89AFF,#FFA87C);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .result-card .lab{font-size:14.5px;color:var(--ink-2);margin-top:16px;line-height:1.8;}
+
+  /* ============ Marquee ============ */
+  .marquee{position:relative;overflow:hidden;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.45);backdrop-filter:blur(10px);}
+  .marquee-track{display:flex;width:max-content;animation:marquee 40s linear infinite;}
+  .marquee:hover .marquee-track{animation-play-state:paused;}
+  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .mq-item{display:flex;align-items:center;gap:34px;padding-right:34px;font-family:"Space Grotesk";font-size:22px;font-weight:600;color:var(--ink-2);white-space:nowrap;}
+  .mq-item .sep{width:6px;height:6px;border-radius:50%;background:var(--ink);opacity:.3;flex-shrink:0;}
+  .mq-item.hot{color:var(--ink);}
+  .mq-item.hot .sep{background:linear-gradient(135deg,#6EA8FF,#B89AFF);opacity:1;}
+
+  /* ============ CTA ============ */
+  .cta{
+    position:relative;overflow:hidden;border-radius:30px;
+    background:var(--ink);color:#fff;padding:100px 70px;text-align:center;
+  }
+  .cta::before{content:"";position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(110,168,255,.4),transparent 70%);top:-200px;left:50%;transform:translateX(-50%);filter:blur(60px);}
+  .cta::after{content:"";position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(184,154,255,.3),transparent 70%);bottom:-200px;right:-100px;filter:blur(60px);}
+  .cta h2{font-size:clamp(32px,4.5vw,58px);font-weight:800;letter-spacing:-.02em;position:relative;}
+  .cta p{margin-top:22px;font-size:17px;color:rgba(255,255,255,.72);position:relative;}
+  .cta .btns{margin-top:42px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;}
+  .cta .btn-primary{background:#fff;color:var(--ink);box-shadow:0 8px 28px rgba(0,0,0,.25);}
+  .cta .btn-primary:hover{box-shadow:0 14px 40px rgba(0,0,0,.35);}
+  .cta .btn-ghost{border-color:rgba(255,255,255,.3);color:#fff;background:rgba(255,255,255,.05);}
+  .cta .btn-ghost:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.5);}
+
+  /* ============ Footer ============ */
+  footer{border-top:1px solid var(--line);padding:80px 0 40px;position:relative;z-index:2;background:rgba(255,255,255,.35);backdrop-filter:blur(10px);}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;}
+  .footer-brand .logo{font-weight:700;font-size:17px;display:flex;align-items:center;gap:10px;}
+  .footer-brand .logo .mark{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;background:var(--ink);color:#fff;font-size:12px;font-weight:700;}
+  .footer-brand p{margin-top:16px;font-size:14px;color:var(--ink-3);max-width:280px;line-height:1.8;}
+  .footer-col h4{font-size:13px;letter-spacing:1.5px;color:var(--ink-3);text-transform:uppercase;margin-bottom:18px;font-family:"Space Grotesk";font-weight:700;}
+  .footer-col a{display:block;font-size:14.5px;color:var(--ink-2);margin-bottom:12px;transition:color .25s;}
+  .footer-col a:hover{color:var(--ink);}
+  .footer-bottom{margin-top:54px;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:13px;color:var(--ink-3);}
+
+  /* ============ Modal ============ */
+  .modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:30px;background:rgba(250,250,247,.7);backdrop-filter:blur(12px);opacity:0;pointer-events:none;transition:opacity .35s var(--ease);}
+  .modal.show{opacity:1;pointer-events:auto;}
+  .modal-box{
+    width:100%;max-width:920px;max-height:84vh;display:flex;flex-direction:column;
+    background:var(--surface);border:1px solid var(--line-2);border-radius:22px;overflow:hidden;
+    transform:translateY(30px) scale(.98);transition:transform .4s var(--ease);
+    box-shadow:0 40px 120px rgba(10,13,20,.25);
+  }
+  .modal.show .modal-box{transform:none;}
+  .modal-head{padding:22px 30px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;}
+  .modal-head h3{font-size:17px;font-weight:700;}
+  .modal-close{width:36px;height:36px;border-radius:10px;border:1px solid var(--line-2);background:transparent;color:var(--ink-2);cursor:pointer;font-size:16px;transition:.25s;}
+  .modal-close:hover{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .modal-tabs{display:flex;gap:4px;padding:14px 24px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+  .mtab{font-size:12.5px;font-weight:600;padding:8px 16px;border-radius:8px;cursor:pointer;color:var(--ink-3);border:1px solid transparent;transition:.25s;font-family:"Space Grotesk";}
+  .mtab.active{background:var(--ink);color:#fff;}
+  .modal-body{flex:1;overflow:auto;background:#0A0D14;}
+  .modal-body pre{font-family:"JetBrains Mono","SF Mono",Consolas,monospace;font-size:12.5px;color:#d5e0f0;padding:28px;white-space:pre-wrap;word-break:break-word;line-height:1.7;}
+
+  /* ============ Image Lightbox ============ */
+  .img-modal{
+    position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;
+    padding:40px;background:rgba(7,9,15,.78);backdrop-filter:blur(18px);
+  }
+  .img-modal.show{display:flex;animation:imgin .35s var(--ease);}
+  @keyframes imgin{from{opacity:0}to{opacity:1}}
+  .img-modal img{
+    max-width:92%;max-height:86vh;display:block;border-radius:18px;
+    box-shadow:0 40px 120px rgba(0,0,0,.45);
+    transform:scale(.96);animation:imgscale .4s var(--ease) forwards;
+  }
+  @keyframes imgscale{to{transform:scale(1)}}
+  .img-modal-close{
+    position:absolute;top:24px;right:28px;width:42px;height:42px;border-radius:12px;
+    border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);
+    color:#fff;cursor:pointer;font-size:18px;transition:.25s;backdrop-filter:blur(8px);
+  }
+  .img-modal-close:hover{background:rgba(255,255,255,.18);}
+  .img-modal-cap{
+    position:absolute;left:50%;bottom:30px;transform:translateX(-50%);
+    color:rgba(255,255,255,.85);font-size:13px;letter-spacing:.5px;
+    background:rgba(0,0,0,.4);padding:8px 18px;border-radius:100px;backdrop-filter:blur(8px);
+    max-width:80%;text-align:center;
+  }
+
+  /* ============ Back to top ============ */
+  .totop{position:fixed;right:28px;bottom:28px;z-index:90;width:48px;height:48px;border-radius:14px;border:1px solid var(--line-2);background:rgba(255,255,255,.85);backdrop-filter:blur(10px);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.3s;font-size:18px;font-weight:700;}
+  .totop.show{opacity:1;pointer-events:auto;}
+  .totop:hover{background:var(--ink);color:#fff;border-color:var(--ink);transform:translateY(-3px);}
+
+  /* ============ Responsive ============ */
+  @media (max-width:900px){
+    .nav-links{display:none;}
+    .nav-burger{display:flex;}
+    .hero-metrics{grid-template-columns:1fr 1fr;gap:30px;}
+    .cap-grid,.feat,.result-grid{grid-template-columns:1fr;}
+    .proj-flow{grid-template-columns:1fr;}
+    .tl-item{grid-template-columns:1fr;gap:8px;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .cta{padding:60px 28px;}
+    .proj-card{padding:32px 26px;}
+    .proj-card .top{flex-direction:column;gap:12px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .orb{animation:none!important;}
+    *{animation-duration:0s!important;transition:none!important;}
+    .reveal{opacity:1;transform:none;}
+  }
+  @media print{
+    .reveal{opacity:1!important;transform:none!important;}
+    section{padding:60px 0;break-inside:avoid;}
+    .proj-card{break-inside:avoid;page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-layer">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="orb orb-4"></div>
+  <div class="orb orb-5"></div>
+  <div class="orb orb-6"></div>
+  <div class="orb orb-7"></div>
+</div>
+
+<!-- ============ Nav ============ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo en"><span class="mark">L</span>LUO LETONG</div>
+    <div class="nav-links">
+      <a href="#capabilities">能力</a>
+      <a href="#projects">AI 项目</a>
+      <a href="#stack">技术栈</a>
+      <a href="#experience">经历</a>
+      <a href="#results">成果</a>
+    </div>
+    <a class="nav-cta" href="#contact">下载简历</a>
+    <button class="nav-burger" id="burger" aria-label="菜单"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ============ Hero ============ -->
+<header class="wrap hero">
+  <div class="hero-badge"><span class="pulse"></span> AI 社媒管理专员 · 社媒策划专员 · 2027 届</div>
+  <h1 class="reveal in">把运营,<br>变成<span class="grad">可复制的系统</span></h1>
+  <p class="hero-sub reveal in" style="--i:2">独立运营 TikTok、Instagram、YouTube 等平台,以 <b>AI 产品经理思维</b>从业务痛点出发,落地 <b>76+ 个 AI 工作流</b>——用数据与自动化,让增长有据可循。</p>
+  <div class="hero-cta reveal in" style="--i:3">
+    <a href="#projects" class="btn btn-primary">查看 AI 项目 <span class="arr">→</span></a>
+    <a href="resume.pdf" download class="btn btn-ghost">下载简历</a>
+  </div>
+  <div class="hero-metrics">
+    <div class="hm reveal in" style="--i:4"><div class="v"><em>600万</em>+</div><div class="l">多平台累计曝光</div></div>
+    <div class="hm reveal in" style="--i:5"><div class="v"><em>76</em>+</div><div class="l">独立落地 AI 工作流</div></div>
+    <div class="hm reveal in" style="--i:6"><div class="v"><em>60</em>+</div><div class="l">独立产出社媒内容</div></div>
+    <div class="hm reveal in" style="--i:7"><div class="v"><em>6000</em>+</div><div class="l">官媒周粉增长下限</div></div>
+  </div>
+</header>
+
+<!-- ============ Marquee ============ -->
+<div class="marquee" style="position:relative;z-index:2;">
+  <div class="marquee-track" id="mqTrack">
+    <div class="mq-item hot"><span class="sep"></span>N8N</div>
+    <div class="mq-item"><span class="sep"></span>Dify</div>
+    <div class="mq-item"><span class="sep"></span>Codex</div>
+    <div class="mq-item"><span class="sep"></span>Claude Code</div>
+    <div class="mq-item"><span class="sep"></span>Hermes</div>
+    <div class="mq-item"><span class="sep"></span>NewAPI</div>
+    <div class="mq-item"><span class="sep"></span>Apify</div>
+    <div class="mq-item"><span class="sep"></span>TikHub</div>
+    <div class="mq-item"><span class="sep"></span>FFmpeg</div>
+    <div class="mq-item"><span class="sep"></span>TikTok</div>
+    <div class="mq-item"><span class="sep"></span>Instagram</div>
+    <div class="mq-item"><span class="sep"></span>YouTube</div>
+  </div>
+</div>
+
+<!-- ============ Capabilities ============ -->
+<section id="capabilities">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index en reveal in">01 / CAPABILITIES</div>
+      <h2 class="reveal in">三种能力,<span class="it">一个闭环</span></h2>
+      <p class="lead reveal in">我站在内容运营与 AI 工程的交叉点——既懂内容、懂用户,又能用技术把运营经验固化为可复制的系统。</p>
+    </div>
+    <div class="cap-grid">
+      <div class="cap-card reveal" style="--i:0">
+        <div class="cap-num en">/ 01</div>
+        <h3>海外社媒运营</h3>
+        <p>从选题、脚本、视觉到发布、互动、复盘的完整链路独立操盘,覆盖 TikTok、Instagram、X、YouTube、Facebook 等主流平台。</p>
+        <div class="tags"><span>内容策划</span><span>红人营销</span><span>Giveaway</span><span>热点追踪</span></div>
+      </div>
+      <div class="cap-card reveal" style="--i:1">
+        <div class="cap-num en">/ 02</div>
+        <h3>AI 工作流产品化</h3>
+        <p>以 AI 产品经理思维,从业务痛点出发设计工作流,用 N8N、Dify、Codex 等工具把重复工作自动化,沉淀可复用 SOP。</p>
+        <div class="tags"><span>N8N</span><span>Dify</span><span>Codex</span><span>NewAPI</span></div>
+      </div>
+      <div class="cap-card reveal" style="--i:2">
+        <div class="cap-num en">/ 03</div>
+        <h3>数据驱动决策</h3>
+        <p>用 Meta 后台、留存率看板、UTM 归因等数据反推内容与投放策略,把「凭感觉」变成「有数据可循」。</p>
+        <div class="tags"><span>Meta 后台</span><span>UTM 归因</span><span>留存率看板</span><span>周报/月报</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Social ============ -->
+<section id="social" style="padding-top:0;">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index en reveal in">02 / SOCIAL MEDIA</div>
+      <h2 class="reveal in">海外社媒运营<span class="it">实战</span></h2>
+      <p class="lead reveal in">在深圳壹秘科技独立操盘五大平台,从内容到红人、从社群到数据,全链路沉淀。</p>
+    </div>
+    <div class="feat">
+      <div class="feat-item reveal" style="--i:0">
+        <div class="idx en">/ 01 内容运营</div>
+        <h3>60+ 内容,曝光 600 万+</h3>
+        <p>独立完成 Canva 设计、内容策划、脚本撰写、视频拍摄剪辑,策划 Giveaway 等互动活动,累计产出 60+ 内容、曝光 600 万+。</p>
+        <div class="metric"><em>600万+</em><small>累计曝光</small></div>
+      </div>
+      <div class="feat-item reveal" style="--i:1">
+        <div class="idx en">/ 02 红人营销</div>
+        <h3>零预算撬动品牌曝光</h3>
+        <p>主导海外红人建联与商务谈判,触达 600+ 红人、达成 100 个免费置换合作,单条合作视频最高播放 20 万。</p>
+        <div class="metric"><em>100</em><small>免费置换合作</small></div>
+      </div>
+      <div class="feat-item reveal" style="--i:2">
+        <div class="idx en">/ 03 社群维护</div>
+        <h3>把互动变成粘性</h3>
+        <p>负责评论区与私信日常互动,及时响应用户反馈,持续提升账号互动率与粉丝粘性。</p>
+        <div class="metric"><em>5</em><small>大平台日常运营</small></div>
+      </div>
+      <div class="feat-item reveal" style="--i:3">
+        <div class="idx en">/ 04 数据复盘</div>
+        <h3>用数据反推策略</h3>
+        <p>定期输出运营周报/月报,利用 Meta 分析平台数据,追踪曝光、播放、互动、转粉,为内容策略优化提供支撑。</p>
+        <div class="metric"><em>Meta</em><small>平台数据分析</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Projects ============ -->
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index en reveal in">03 / AI WORKFLOWS</div>
+      <h2 class="reveal in">76+ 个 AI 工作流,<br>最有代表性的 <span class="it">8 个</span></h2>
+      <p class="lead reveal in">在万兴科技(欧美营销中心 · 中台部门)任 AI 社媒策划专员(统筹管理),每个项目都遵循「痛点 → 方案 → 成果」的产品化路径。</p>
+    </div>
+    <div class="proj-list" id="projList"></div>
+  </div>
+</section>
+
+<!-- ============ Stack ============ -->
+<section id="stack" style="padding-top:0;">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index en reveal in">04 / STACK</div>
+      <h2 class="reveal in">技术栈</h2>
+      <p class="lead reveal in">AI 工作流搭建 · 数据采集 · 社媒平台 · 数据分析 · 办公协作,全链路工具链。</p>
+    </div>
+    <div class="skill-groups">
+      <div class="skill-row reveal" style="--i:0">
+        <div class="skill-label">AI 工作流</div>
+        <div class="skill-chips"><span>N8N</span><span>Dify</span><span>Codex</span><span>Claude Code</span><span>Hermes</span><span>NewAPI</span><span>GPT 本地部署</span></div>
+      </div>
+      <div class="skill-row reveal" style="--i:1">
+        <div class="skill-label">数据采集</div>
+        <div class="skill-chips"><span>Apify</span><span>TikHub</span><span>Twitterapi.io</span><span>QBI</span><span>Google Sheet API</span><span>FFmpeg</span></div>
+      </div>
+      <div class="skill-row reveal" style="--i:2">
+        <div class="skill-label">社媒平台</div>
+        <div class="skill-chips"><span>TikTok</span><span>Instagram</span><span>X</span><span>YouTube</span><span>Facebook</span><span>小红书</span><span>抖音</span><span>B站</span></div>
+      </div>
+      <div class="skill-row reveal" style="--i:3">
+        <div class="skill-label">数据分析</div>
+        <div class="skill-chips"><span>Meta 后台</span><span>Google Analytics</span><span>留存率看板</span><span>UTM 归因</span></div>
+      </div>
+      <div class="skill-row reveal" style="--i:4">
+        <div class="skill-label">办公协作</div>
+        <div class="skill-chips"><span>飞书</span><span>钉钉</span><span>Office</span><span>SOP 沉淀</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Experience ============ -->
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index en reveal in">05 / EXPERIENCE</div>
+      <h2 class="reveal in">经历时间线</h2>
+    </div>
+    <div class="tl">
+      <div class="tl-item reveal">
+        <div class="tl-date en">2026.04 — 至今</div>
+        <div class="tl-body">
+          <h3>AI 社媒策划专员(统筹管理)— AI 变革小组</h3>
+          <div class="sub">万兴科技股份有限公司 · 欧美营销中心(中台部门)</div>
+          <ul>
+            <li>统筹海外社媒营销场景 AI 工作流建设,独立搭建 76+ 个 AI/自动化工作流,沉淀 SOP、模板与协作规范</li>
+            <li>主导 AI 工具与自动化流程测试、效果评估与问题反馈,支撑工具选型与流程迭代</li>
+            <li>维护社媒工具/平台/服务商/账号资产台账,推动内容质量管理与标准化发布</li>
+            <li>整改后官媒矩阵周粉稳定增长 6000+,引流下载数据提升 20%</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-date en">2025.11 — 2026.03</div>
+        <div class="tl-body">
+          <h3>海外社交媒体运营</h3>
+          <div class="sub">深圳壹秘科技有限公司</div>
+          <ul>
+            <li>独立运营 TikTok/Instagram/X/YouTube/Facebook,累计产出 60+ 内容、曝光 600 万+</li>
+            <li>主导红人建联谈判,触达 600+ 红人、100 个免费置换合作,单条视频最高播放 20 万</li>
+            <li>定期输出周报/月报,基于 Meta 数据反推内容策略优化</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-date en">2024 — 2025</div>
+        <div class="tl-body">
+          <h3>创业与自媒体项目</h3>
+          <div class="sub">漫画鼠标垫创业 · AI 图文带货 · 游戏自媒体</div>
+          <ul>
+            <li>漫画鼠标垫:产品设计→供应链(成本 -30%)→全渠道营销→400+ 私域用户,0 到 1 商业闭环</li>
+            <li>自媒体:AI 图文+短视频带货,多账号矩阵运营,形成「内容—数据—收益」闭环</li>
+            <li>游戏账号:抖音从 0 到 700 粉丝,掌握内容策划-生产-发布-推广全流程</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Results ============ -->
+<section id="results" style="padding-top:0;">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index en reveal in">06 / RESULTS</div>
+      <h2 class="reveal in">成果,<span class="it">用数字说话</span></h2>
+    </div>
+    <div class="result-grid">
+      <div class="result-card reveal" style="--i:0">
+        <div class="big en"><em>6000+</em></div>
+        <div class="lab">整改后官媒矩阵周粉增长下限。通过 hashtag 规范、品牌露出、评论回复、官媒一致性检查,推动多账号标准化。</div>
+      </div>
+      <div class="result-card reveal" style="--i:1">
+        <div class="big en"><em>+20%</em></div>
+        <div class="lab">引流与下载数据同步提升。AI 工作流对官媒与矩阵号粉丝量增长起了重要推动作用。</div>
+      </div>
+      <div class="result-card reveal" style="--i:2">
+        <div class="big en"><em>TOP 1</em></div>
+        <div class="lab">公司 AI 经验分享中,以少于他人的帖数量,获得最多的工作流收藏数量。</div>
+      </div>
+      <div class="result-card reveal" style="--i:3">
+        <div class="big en"><em>8 / 76+</em></div>
+        <div class="lab">精选 8 个代表项目,来自累计 76+ 个落地工作流,覆盖投流、舆情、热点、归因、达人数据等核心场景。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section id="contact" style="padding-top:30px;">
+  <div class="wrap">
+    <div class="cta reveal">
+      <h2>想聊聊 AI × 社媒运营的可能性?</h2>
+      <p>下载我的简历,或直接联系我——期待一起把增长做得更可复制、更高效。</p>
+      <div class="btns">
+        <a href="resume.pdf" download class="btn btn-primary">下载简历 PDF <span class="arr">→</span></a>
+        <a href="mailto:2488249115@qq.com" class="btn btn-ghost">联系我</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Footer ============ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo en"><span class="mark">L</span>LUO LETONG</div>
+        <p>AI 社媒策划 · 海外社媒运营。用 AI 把运营变成可复制的系统能力。</p>
+      </div>
+      <div class="footer-col">
+        <h4>NAVIGATION</h4>
+        <a href="#capabilities">核心能力</a>
+        <a href="#projects">AI 项目</a>
+        <a href="#stack">技术栈</a>
+        <a href="#experience">经历</a>
+      </div>
+      <div class="footer-col">
+        <h4>WORK</h4>
+        <a href="#social">社媒运营</a>
+        <a href="#results">成果数据</a>
+        <a href="resume.pdf" download>简历 PDF</a>
+      </div>
+      <div class="footer-col">
+        <h4>CONTACT</h4>
+        <a href="mailto:2488249115@qq.com">2488249115@qq.com</a>
+        <a href="tel:15800170676">158-0017-0676</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 罗乐桐 · 广东药科大学</span>
+      <span class="en">Built with N8N · Dify · Codex</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ Modal ============ -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="modalTitle">项目代码</h3>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-tabs" id="modalTabs"></div>
+    <div class="modal-body"><pre id="modalCode"></pre></div>
+  </div>
+</div>
+
+<!-- ============ Image Lightbox ============ -->
+<div class="img-modal" id="imgModal">
+  <button class="img-modal-close" id="imgModalClose" aria-label="关闭">✕</button>
+  <img id="imgModalImg" src="" alt="">
+  <div class="img-modal-cap" id="imgModalCap"></div>
+</div>
+
+<button class="totop" id="totop" aria-label="返回顶部">↑</button>
+
+<script>
+/* ============ 项目数据 ============ */
+const PROJECTS = [
+  {no:'01', flag:true, title:'品牌优质素材反哺投流工作流', sub:'从素材筛选到投流决策的一站式 AI 产品', tech:'GPT-5.5 本地部署 · Apify/TikHub API · FFmpeg · Codex · Google Sheet · QBI',
+   intro:'<b>背景:</b>基于公司品牌广告数据表"乱、杂、散"的痛点,搭建从素材筛选 → 视频抽帧分析 → 周报月报 → 投流决策的一条龙闭环工作流。<br><br><b>核心能力:</b>本地部署 GPT 模型按 18 个内容维度(时长、Hook 机制、创意卖点、用户动机、产品植入深度、CTA 类型等)结构化分析;开发自动删除程序解决本地固态内存瓶颈;基于 Codex 调用 taste-skill/find-skill 搭建业务看板网站。',
+   pain:'品牌广告数据散落 QBI、Google Sheet、钉钉表格,投流人员仅凭运营主观需求决策,缺乏数据依据;公司现有 AI 无法直接解析视频内容。',
+   plan:'多端数据同步 → 视频唯一标识全链路追溯 → 脚本按 videoviews/CPI/CPV/Share Rate/Follow Rate/clicks_link 指标筛选素材 → Apify/TikHub API 下载 → FFmpeg 抽帧 → GPT-5.5 18 维度分析 → 业务看板网站展示。',
+   gain:'打通"素材筛查 → 抽帧分析 → 周报/月报 → 投流决策"全链路闭环;对接数据仓库获取 QBI 权限实现全自动化;沉淀 SOP。',
+   gallery:[{src:'image1.png', cap:'品牌广告素材周报 — 业务入口与管理员入口'},{src:'image3.png', cap:'Highlights 重点素材解析 — TOP1-3 视频多维分析'}]},
+
+  {no:'02', flag:true, title:'Reddit 品牌植入自动化项目', sub:'从外包依赖到内部可复用的营销能力', tech:'Geelark 云手机 · ADB · 本地 LLM · N8N 留存率看板',
+   intro:'<b>背景:</b>Reddit 平台品牌宣传原本依赖外包服务商,自主可控性弱、效率低。搭建两条自动化工作流:① 浏览器自动化浏览/评论/发帖;② N8N 留存率监测看板支撑项目结项。<br><br><b>核心能力:</b>Geelark 云手机配置独立 IP 环境,解决多账号多国家运营的 IP 风控问题;ADB 桥接 + Geelark API 实时采集 subreddit 规则,本地 LLM 分析后自动互动;从单账号跑通扩展至批量账号,可自定义浏览时长与发帖数量。',
+   pain:'Reddit 推广依赖外包;人工运营存在账号 IP 风控与效率低两大瓶颈;缺乏结项数据支撑。',
+   plan:'Geelark 云手机配 IP 环境 + ADB 桥接 + Geelark API 实时采集 + 本地 LLM 智能分析 + 自动浏览/评论/发帖;N8N 设计留存率监测工作流 + 看板网站。',
+   gain:'浏览—分析—评论—发帖全流程自动化;留存率看板(总留存率 63%、帖子 91%、评论 61%)支撑项目结项;沉淀可复用品牌植入能力。',
+   gallery:[{src:'image10.png', cap:'Reddit 留存监测 N8N 工作流(节点图)'}]},
+
+  {no:'03', flag:true, title:'世界杯热点与赛事动态工作流', sub:'热点感知与产品创意决策助手', tech:'TikHub MCP · Twitterapi.io · GPT 本地部署 · 钉钉机器人 · browser-agent',
+   intro:'<b>背景:</b>世界杯期间业务同事需要蹭热点、为创作提供灵感,但人工盯热点效率低且易错过趋势窗口。<br><br><b>核心能力:</b>聚合 YouTube/TikTok/Instagram/X 四平台数据,每平台固定 3 个账号 + hashtag/关键词双路采集,抓取 24 小时内视频;本地 GPT 对 Top30 抽帧分析,输出结构化 JSON 与"当日热梗";结合 Wondershare 产品知识库匹配高关联产品,给出具体创作建议;针对 FIFA 官网比分在点球大战场景解析失败,接入 browser-agent 兜底。',
+   pain:'世界杯期间人工盯热点效率低;FIFA 比分脚本对点球大战解析失败;缺自动化推送通道。',
+   plan:'四平台数据聚合 → Top30 抽帧分析 → 当日热梗/热点拆解 → 产品匹配建议 → 钉钉机器人自动推送。',
+   gain:'每日稳定推送热点与创作建议;以 views/comment 增长率(>30%)建立爆款判定标准;通过 IT 申请钉钉机器人 MCP 权限打通自动化;沉淀 SOP。',
+   gallery:[{src:'image12.png', cap:'多语言 TikTok 热点洞察 N8N 工作流(节点图)'}]},
+
+  {no:'04', flag:false, title:'UTM 规范化与产品命中检测', sub:'为单视频归因奠定基础', tech:'Apify · 产品映射表 · Playwright 兜底',
+   intro:'<b>背景:</b>UTM 配置不规范,多个视频配置同一个 UTM,导致数据分析师无法拆分单条视频效果,产品归因失真。<br><br><b>核心能力:</b>两条自动化链路并行:① Apify 自动采集四大平台标题/描述/hashtag,结合产品映射表计算视频-产品命中率,统计误差在可控范围;② 通过 API 抓取账号 bio 与 linktree 聚合页,使用 browser-agent + Playwright 兜底,定位违规账号并推动整改。',
+   pain:'UTM 配置不规范、多视频共用同一 UTM;数据分析师无法拆分单条视频效果;linktree 等聚合页无法直接打开。',
+   plan:'链路 A:Apify 自动采集 → 产品映射表计算命中率;链路 B:API + browser-agent + Playwright 抓取聚合页 UTM → 定位违规账号 → 推动整改。',
+   gain:'为 UTM 跟踪与单视频归因奠定基础;产品命中统计误差可控;持续推动账号规范化。',
+   gallery:[]},
+
+  {no:'05', flag:false, title:'竞品动态监测工作流', sub:'竞品情报每日可视化推送', tech:'TikTok / YouTube / Instagram · LLM 聚合分析',
+   intro:'<b>背景:</b>手机业务需要洞察各平台竞品官媒账号动态,人工检索覆盖不全、效率低。<br><br><b>核心能力:</b>每日自动采集 TikTok/YouTube/Instagram 三大平台竞品官媒账号内容,LLM 聚合分析提炼出账号内容总览、热门话题趋势、Campaign 活动、功能更新等结构化洞察,以钉钉群机器人推送形式可视化送达各社媒与产品业务群,沉淀 SOP。',
+   pain:'竞品官媒账号分散在多平台,人工检索覆盖不全。',
+   plan:'每日自动采集竞品内容 → LLM 聚合分析 → 结构化洞察 → 可视化钉钉群推送。',
+   gain:'为社媒与产品团队提供每日竞品情报;输出 SOP 沉淀复用。',
+   gallery:[{src:'image11.png', cap:'TikTok 竞品多账号内容洞察 — 看板发布与执行心跳'},{src:'image12.png', cap:'TikHub_N8N 完整工作流(配置 → 抓取 → LLM 解析 → Webhook)'}]},
+
+  {no:'06', flag:false, title:'竞品机型数据月报 skill', sub:'可信、可追溯的 HTML 月报', tech:'TikHub · NewAPI 接入 GPT-5.6-sol · HTML 月报',
+   intro:'<b>背景:</b>每月基于 TikHub 采集的 TikTok/Instagram/YouTube 竞品机型数据,生成独立可浏览的中文竞品机型月报 HTML 网站。Skill 解决六大痛点:时间边界易错、UTC/本地时间戳混用、LLM 幻觉编造数据、正式版 vs 草稿混淆、采集审计不透明、来源标签错误归因。<br><br><b>核心能力:</b>TikHub 采集竞品机型数据,经 NewAPI 接入 GPT-5.6-sol 生成洞察,输出可交互 HTML 月报(机型热点 / WhatsApp 更新 / 需求洞察 / 推广建议);全链路数据可溯源、口径统一、自动校验;任何人运行产出一致,辅助选品与投放决策。',
+   pain:'时间口径易错;LLM 幻觉;草稿冒充正式版;审计不透明;来源标签误归因。',
+   plan:'TikHub 采集 → NewAPI GPT 洞察 → 可交互 HTML 月报;全链路溯源 + 自动校验 + 统一口径。',
+   gain:'月报可信可靠、运行产出一致;数据"准生证";选品与投放决策依据可靠;历史可追溯。',
+   gallery:[{src:'image14.png', cap:'月报封面:数据线月度行业趋势与需求洞察'},{src:'image17.png', cap:'机型热点:Samsung / iPhone / Android 等关键机型分布'}]},
+
+  {no:'07', flag:false, title:'Reddit 舆情监测工作流', sub:'发现—分析—通知—处理 闭环', tech:'品牌别名匹配 · LLM 情绪/风险分级 · N8N 自动化',
+   intro:'<b>背景:</b>Reddit 上客户对产品的反馈问题,需要第一时间被发现并通知到对应负责人。原本依赖人工检索,易漏、慢、不准确。<br><br><b>核心能力:</b>自动化采集帖子+评论 → 品牌别名匹配(覆盖 Filmora/Media.io/Recoverit/PDFelement/UniConverter/Dr.Fone/MobileTrans 等 7+ 产品线)→ LLM 结构化输出情绪(Positive/Neutral/Negative)+风险等级(Low/Medium/High)→ 仅将负面舆情路由至对应产品负责人或群;串行执行+请求重试+运行锁保障稳定性;支持同时监测帖子与评论(很多真实反馈在评论里)。',
+   pain:'客户反馈难以及时发现;人工易漏、情绪误判、英文需翻译、重复消息疲劳。',
+   plan:'采集+去重 → 情绪/风险分级 → 负面路由至产品负责人;多产品线串行 + 重试 + 运行锁。',
+   gain:'「发现—分析—留档—通知—处理」AI 舆情闭环;降低处理门槛与通知疲劳;历史可追溯。',
+   gallery:[{src:'image22.png', cap:'Reddit 舆情监测 N8N 流程(去重 → LLM 风险分级 → 路由)'},{src:'image21.png', cap:'多产品线串行舆情处理 LLM 节点图'},{src:'image23.png', cap:'多账号 × 多平台数据采集工作流(LLaMA 分析)'}]},
+
+  {no:'08', flag:false, title:'Apify Actor 上线(TikTok 达人数据)', sub:'零浏览器自动化的低成本抓取', tech:'TikHub API · 断点恢复 · 限流去重',
+   intro:'<b>背景:</b>Apify 商店同类 TikTok Actor 都依赖浏览器自动化(无头浏览器、代理池、cookie 模拟),运行成本高昂。本 Actor 反其道而行:用 TikHub API 替代浏览器爬虫,把抓取/破解活全部外包给 TikHub,Apify 端只跑极轻逻辑。<br><br><b>核心能力:</b>仅用 2 个 TikHub 接口(handler_user_profile、fetch_user_post_videos_v3);输入 1-50 个 TikTok 主页链接,自动拉取博主资料并翻完所有公开帖子;内置限流保护(每页 20 条、最多 5 主页并发、每秒 6 次请求、4 次重试);大小写不敏感去重 + 部分成功 + Apify resurrection 恢复。',
+   pain:'Apify 商店同类 Actor 依赖浏览器自动化,运行成本高昂(消耗计算分钟数与内存)。',
+   plan:'TikHub API 替代浏览器爬虫 → 轻量逻辑 + 限流/去重/断点恢复 + 部分成功处理。',
+   gain:'抓取成本主要花在 TikHub API 配额,Apify 端近乎零成本;支撑达人筛选建联、竞品监控、视频互动率分析、数据管道等场景。',
+   gallery:[{src:'image24.png', cap:'Apify My Actors — tiktok profile video scr (连接tikhub)'},{src:'image25.png', cap:'Output Dataset — 结构化记录(互动/内容/媒体/上下文)'}]}
+];
+
+/* ============ 渲染项目 ============ */
+(function render(){
+  const list = document.getElementById('projList');
+  list.innerHTML = PROJECTS.map(p=>`
+    <div class="proj-card reveal" data-p="${p.no}" style="--i:${(p.no-1)%3}">
+      <div class="top">
+        <div>
+          <div class="no en">/ ${p.no}</div>
+          <h3>${p.title}</h3>
+          <div class="role"><b>${p.sub}</b></div>
+        </div>
+        <div class="badge ${p.flag?'':'wf'} en">${p.flag?'FLAGSHIP':'WORKFLOW'}</div>
+      </div>
+      <div class="proj-intro">${p.intro}</div>
+      <div class="proj-flow">
+        <div class="pf"><b>PAIN</b><span>${p.pain}</span></div>
+        <div class="pf"><b>SOLUTION</b><span>${p.plan}</span></div>
+        <div class="pf"><b>IMPACT</b><span>${p.gain}</span></div>
+      </div>
+      ${p.gallery && p.gallery.length ? `<div class="proj-gallery">${p.gallery.map(g=>`<figure><div class="ph" data-zoom="${g.src}" data-cap="${g.cap}"><img class="img-soft" src="images/${g.src}" alt="${g.cap}"></div><figcaption>${g.cap}</figcaption></figure>`).join('')}</div>` : ''}
+      <div class="foot">
+        <div class="tech">${p.tech}</div>
+        <button class="link" data-code="${p.no}">查看代码 / DSL <span class="arr">→</span></button>
+      </div>
+    </div>
+  `).join('');
+})();
+
+/* ============ Reveal ============ */
+(function reveal(){
+  const els = document.querySelectorAll('.reveal');
+  // 兜底:视口内或上方 200px 内立即显示(避免滚动前大片空白)
+  const vh = innerHeight;
+  els.forEach(el=>{
+    const r = el.getBoundingClientRect();
+    if(r.top < vh + 200){ el.classList.add('in'); }
+  });
+  const io = new IntersectionObserver((es)=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:0.05,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(el=>{
+    if(!el.classList.contains('in')) io.observe(el);
+  });
+})();
+
+/* ============ Spotlight hover ============ */
+document.querySelectorAll('.cap-card,.proj-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    card.style.setProperty('--mx',(e.clientX-r.left)+'px');
+    card.style.setProperty('--my',(e.clientY-r.top)+'px');
+  });
+});
+
+/* ============ Nav scroll + to top ============ */
+(function(){
+  const nav=document.getElementById('nav');
+  const totop=document.getElementById('totop');
+  addEventListener('scroll',()=>{
+    nav.classList.toggle('scrolled',scrollY>20);
+    totop.classList.toggle('show',scrollY>600);
+  },{passive:true});
+  totop.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+})();
+
+/* ============ Marquee clone ============ */
+(function mq(){ document.getElementById('mqTrack').innerHTML += document.getElementById('mqTrack').innerHTML; })();
+
+/* ============ Modal ============ */
+const PLACEHOLDER = '代码文件整理中……\n\nDify DSL / N8N JSON / 脚本文件即将接入此处。\n每个项目支持多文件 Tab 切换与一键下载。';
+function openModal(pno){
+  const p = PROJECTS.find(x=>x.no===pno);
+  document.getElementById('modalTitle').textContent = p.title;
+  document.getElementById('modalTabs').innerHTML = '<div class="mtab active">main</div>';
+  document.getElementById('modalCode').textContent = PLACEHOLDER;
+  document.getElementById('modal').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('show');
+  document.body.style.overflow='';
+}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-code]');
+  if(t)openModal(t.getAttribute('data-code'));
+});
+document.getElementById('modalClose').addEventListener('click',closeModal);
+document.getElementById('modal').addEventListener('click',e=>{ if(e.target.id==='modal')closeModal(); });
+addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeModal(); closeImgModal(); } });
+
+/* ============ Image Lightbox ============ */
+function openImgModal(src,cap){
+  const m=document.getElementById('imgModal');
+  document.getElementById('imgModalImg').src='images/'+src;
+  document.getElementById('imgModalImg').alt=cap||'';
+  document.getElementById('imgModalCap').textContent=cap||'';
+  m.classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeImgModal(){
+  document.getElementById('imgModal').classList.remove('show');
+  document.body.style.overflow='';
+}
+document.addEventListener('click',e=>{
+  const z=e.target.closest('[data-zoom]');
+  if(z)openImgModal(z.getAttribute('data-zoom'),z.getAttribute('data-cap'));
+});
+document.getElementById('imgModalClose').addEventListener('click',closeImgModal);
+document.getElementById('imgModal').addEventListener('click',e=>{ if(e.target.id==='imgModal')closeImgModal(); });
+</script>
+</body>
+</html>
