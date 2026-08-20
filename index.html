@@ -308,7 +308,7 @@
     .nav-links{display:none;}
     .nav-burger{display:flex;}
     .hero-metrics{grid-template-columns:1fr 1fr;gap:30px;}
-    .cap-grid,.feat,.result-grid{grid-template-columns:1fr;}
+    .cap-grid,.feat,.result-grid,.end-grid{grid-template-columns:1fr;}
     .proj-flow{grid-template-columns:1fr;}
     .tl-item{grid-template-columns:1fr;gap:8px;}
     .footer-grid{grid-template-columns:1fr 1fr;}
@@ -595,6 +595,40 @@
   </div>
 </section>
 
+<!-- ============ AI Data & 导师评价 ============ -->
+<section id="endorsement">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-index en reveal in">07 / AI DATA & MENTOR REVIEW</div>
+      <h2 class="reveal in">AI 数据 & 导师<span class="it">评价</span></h2>
+      <p class="lead reveal in">2026 年的 AI 业务数据看板,以及来自部门导师的绩效与贡献度评价。</p>
+    </div>
+    <div class="end-grid">
+      <figure class="end-card reveal" style="--i:0">
+        <div class="ph" data-zoom="img37.jpg" data-cap="2026 年度 AI 资源使用数据看板(本地)"><img class="img-soft" src="images/img37.jpg" alt="2026 年度 AI 资源使用数据看板"></div>
+        <figcaption class="end-cap">
+          <b>2026 年度 AI 资源使用数据</b>
+          <span>Token 消耗 <em>6,233,236,346</em> · 构建工作流 <em>76</em> · AI 编程使用 <em>149 次</em> · AI 工具 / Skills 上线 <em>0</em></span>
+        </figcaption>
+      </figure>
+      <figure class="end-card reveal" style="--i:1">
+        <div class="ph" data-zoom="img38.png" data-cap="员工本人 + 直属上级评价 · 绩效等级 A"><img class="img-soft" src="images/img38.png" alt="导师评价 - 员工本人 + 直属上级评价"></div>
+        <figcaption class="end-cap">
+          <b>员工本人 & 直属上级评价</b>
+          <span>罗乐桐 <em>75.25 / A</em> · 黄伟朝(直属上级)<em>78.25 / A</em> · 双方评价高度一致,工作成果与 AI 变革推进获得认可。</span>
+        </figcaption>
+      </figure>
+      <figure class="end-card reveal" style="--i:2">
+        <div class="ph" data-zoom="img39.png" data-cap="贡献度排行榜(近 7 天)· 罗乐桐第 5 名"><img class="img-soft" src="images/img39.png" alt="贡献度排行榜 - 罗乐桐第 5 名"></div>
+        <figcaption class="end-cap">
+          <b>贡献度排行榜(近 7 天)</b>
+          <span>罗乐桐 <em>第 5 名</em> · 文章 2 篇 · 阅读 <em>149</em> · 收藏 <em>8</em> · 公司 AI 经验分享获最多收藏。</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <!-- ============ Footer ============ -->
 <footer>
   <div class="wrap">
@@ -658,14 +692,14 @@ const PROJECTS = [
    pain:'品牌广告数据散落 QBI、Google Sheet、钉钉表格,投流人员仅凭运营主观需求决策,缺乏数据依据;公司现有 AI 无法直接解析视频内容。',
    plan:'多端数据同步 → 视频唯一标识全链路追溯 → 脚本按 videoviews/CPI/CPV/Share Rate/Follow Rate/clicks_link 指标筛选素材 → Apify/TikHub API 下载 → FFmpeg 抽帧 → GPT-5.5 18 维度分析 → 业务看板网站展示。',
    gain:'打通"素材筛查 → 抽帧分析 → 周报/月报 → 投流决策"全链路闭环;对接数据仓库获取 QBI 权限实现全自动化;沉淀 SOP。',
-   gallery:[{src:'image1.png', cap:'品牌广告素材周报 — 业务入口与管理员入口'},{src:'image3.png', cap:'Highlights 重点素材解析 — TOP1-3 视频多维分析'}]},
+   gallery:[{src:'img29.jpg', cap:'业务入口 WANKING OPERATIONS — 业务素材数据看板首页'},{src:'img30.jpg', cap:'品牌广告素材周报 — 02 重点素材解析 (Highlights)'}]},
 
   {no:'02', flag:true, title:'Reddit 品牌植入自动化项目', sub:'从外包依赖到内部可复用的营销能力', tech:'Geelark 云手机 · ADB · 本地 LLM · N8N 留存率看板',
    intro:'<b>背景:</b>Reddit 平台品牌宣传原本依赖外包服务商,自主可控性弱、效率低。搭建两条自动化工作流:① 浏览器自动化浏览/评论/发帖;② N8N 留存率监测看板支撑项目结项。<br><br><b>核心能力:</b>Geelark 云手机配置独立 IP 环境,解决多账号多国家运营的 IP 风控问题;ADB 桥接 + Geelark API 实时采集 subreddit 规则,本地 LLM 分析后自动互动;从单账号跑通扩展至批量账号,可自定义浏览时长与发帖数量。',
    pain:'Reddit 推广依赖外包;人工运营存在账号 IP 风控与效率低两大瓶颈;缺乏结项数据支撑。',
    plan:'Geelark 云手机配 IP 环境 + ADB 桥接 + Geelark API 实时采集 + 本地 LLM 智能分析 + 自动浏览/评论/发帖;N8N 设计留存率监测工作流 + 看板网站。',
    gain:'浏览—分析—评论—发帖全流程自动化;留存率看板(总留存率 63%、帖子 91%、评论 61%)支撑项目结项;沉淀可复用品牌植入能力。',
-   gallery:[{src:'image10.png', cap:'Reddit 留存监测 N8N 工作流(节点图)'}]},
+   gallery:[{src:'img31.png', cap:'Reddit 留存监测 N8N 工作流(节点图)'}]},
 
   {no:'03', flag:true, title:'世界杯热点与赛事动态工作流', sub:'热点感知与产品创意决策助手', tech:'TikHub MCP · Twitterapi.io · GPT 本地部署 · 钉钉机器人 · browser-agent',
    intro:'<b>背景:</b>世界杯期间业务同事需要蹭热点、为创作提供灵感,但人工盯热点效率低且易错过趋势窗口。<br><br><b>核心能力:</b>聚合 YouTube/TikTok/Instagram/X 四平台数据,每平台固定 3 个账号 + hashtag/关键词双路采集,抓取 24 小时内视频;本地 GPT 对 Top30 抽帧分析,输出结构化 JSON 与"当日热梗";结合 Wondershare 产品知识库匹配高关联产品,给出具体创作建议;针对 FIFA 官网比分在点球大战场景解析失败,接入 browser-agent 兜底。',
@@ -686,7 +720,7 @@ const PROJECTS = [
    pain:'竞品官媒账号分散在多平台,人工检索覆盖不全。',
    plan:'每日自动采集竞品内容 → LLM 聚合分析 → 结构化洞察 → 可视化钉钉群推送。',
    gain:'为社媒与产品团队提供每日竞品情报;输出 SOP 沉淀复用。',
-   gallery:[{src:'image11.png', cap:'TikTok 竞品多账号内容洞察 — 看板发布与执行心跳'},{src:'image12.png', cap:'TikHub_N8N 完整工作流(配置 → 抓取 → LLM 解析 → Webhook)'}]},
+   gallery:[{src:'img32.png', cap:'TikHub_N8N 看板心跳验证流程 (Heartbeat webhook)'},{src:'img33.png', cap:'TikTok 竞品多账号内容洞察 N8N 工作流(节点图)'}],
 
   {no:'06', flag:false, title:'竞品机型数据月报 skill', sub:'可信、可追溯的 HTML 月报', tech:'TikHub · NewAPI 接入 GPT-5.6-sol · HTML 月报',
    intro:'<b>背景:</b>每月基于 TikHub 采集的 TikTok/Instagram/YouTube 竞品机型数据,生成独立可浏览的中文竞品机型月报 HTML 网站。Skill 解决六大痛点:时间边界易错、UTC/本地时间戳混用、LLM 幻觉编造数据、正式版 vs 草稿混淆、采集审计不透明、来源标签错误归因。<br><br><b>核心能力:</b>TikHub 采集竞品机型数据,经 NewAPI 接入 GPT-5.6-sol 生成洞察,输出可交互 HTML 月报(机型热点 / WhatsApp 更新 / 需求洞察 / 推广建议);全链路数据可溯源、口径统一、自动校验;任何人运行产出一致,辅助选品与投放决策。',
@@ -700,7 +734,7 @@ const PROJECTS = [
    pain:'客户反馈难以及时发现;人工易漏、情绪误判、英文需翻译、重复消息疲劳。',
    plan:'采集+去重 → 情绪/风险分级 → 负面路由至产品负责人;多产品线串行 + 重试 + 运行锁。',
    gain:'「发现—分析—留档—通知—处理」AI 舆情闭环;降低处理门槛与通知疲劳;历史可追溯。',
-   gallery:[{src:'image22.png', cap:'Reddit 舆情监测 N8N 流程(去重 → LLM 风险分级 → 路由)'},{src:'image21.png', cap:'多产品线串行舆情处理 LLM 节点图'},{src:'image23.png', cap:'多账号 × 多平台数据采集工作流(LLaMA 分析)'}]},
+   gallery:[{src:'img34.png', cap:'Reddit 舆情监测 N8N 流程(去重 → LLM 风险分级 → 路由)'},{src:'img35.png', cap:'多产品线串行舆情处理 LLM 节点图'},{src:'img36.png', cap:'多账号 × 多平台数据采集工作流(LLaMA 分析)'}],
 
   {no:'08', flag:false, title:'Apify Actor 上线(TikTok 达人数据)', sub:'零浏览器自动化的低成本抓取', tech:'TikHub API · 断点恢复 · 限流去重',
    intro:'<b>背景:</b>Apify 商店同类 TikTok Actor 都依赖浏览器自动化(无头浏览器、代理池、cookie 模拟),运行成本高昂。本 Actor 反其道而行:用 TikHub API 替代浏览器爬虫,把抓取/破解活全部外包给 TikHub,Apify 端只跑极轻逻辑。<br><br><b>核心能力:</b>仅用 2 个 TikHub 接口(handler_user_profile、fetch_user_post_videos_v3);输入 1-50 个 TikTok 主页链接,自动拉取博主资料并翻完所有公开帖子;内置限流保护(每页 20 条、最多 5 主页并发、每秒 6 次请求、4 次重试);大小写不敏感去重 + 部分成功 + Apify resurrection 恢复。',
