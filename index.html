@@ -722,7 +722,7 @@ const PROJECTS = [
    pain:'竞品官媒账号分散在多平台,人工检索覆盖不全。',
    plan:'每日自动采集竞品内容 → LLM 聚合分析 → 结构化洞察 → 可视化钉钉群推送。',
    gain:'为社媒与产品团队提供每日竞品情报;输出 SOP 沉淀复用。',
-   gallery:[{src:'img32.png', cap:'TikHub_N8N 看板心跳验证流程 (Heartbeat webhook)'},{src:'img33.png', cap:'TikTok 竞品多账号内容洞察 N8N 工作流(节点图)'}],
+   gallery:[{src:'img32.png', cap:'TikHub_N8N 看板心跳验证流程 (Heartbeat webhook)'},{src:'img33.png', cap:'TikTok 竞品多账号内容洞察 N8N 工作流(节点图)'}]},
 
   {no:'06', flag:false, title:'竞品机型数据月报 skill', sub:'可信、可追溯的 HTML 月报', tech:'TikHub · NewAPI 接入 GPT-5.6-sol · HTML 月报',
    intro:'<b>背景:</b>每月基于 TikHub 采集的 TikTok/Instagram/YouTube 竞品机型数据,生成独立可浏览的中文竞品机型月报 HTML 网站。Skill 解决六大痛点:时间边界易错、UTC/本地时间戳混用、LLM 幻觉编造数据、正式版 vs 草稿混淆、采集审计不透明、来源标签错误归因。<br><br><b>核心能力:</b>TikHub 采集竞品机型数据,经 NewAPI 接入 GPT-5.6-sol 生成洞察,输出可交互 HTML 月报(机型热点 / WhatsApp 更新 / 需求洞察 / 推广建议);全链路数据可溯源、口径统一、自动校验;任何人运行产出一致,辅助选品与投放决策。',
@@ -736,7 +736,7 @@ const PROJECTS = [
    pain:'客户反馈难以及时发现;人工易漏、情绪误判、英文需翻译、重复消息疲劳。',
    plan:'采集+去重 → 情绪/风险分级 → 负面路由至产品负责人;多产品线串行 + 重试 + 运行锁。',
    gain:'「发现—分析—留档—通知—处理」AI 舆情闭环;降低处理门槛与通知疲劳;历史可追溯。',
-   gallery:[{src:'img34.png', cap:'Reddit 舆情监测 N8N 流程(去重 → LLM 风险分级 → 路由)'},{src:'img35.png', cap:'多产品线串行舆情处理 LLM 节点图'},{src:'img36.png', cap:'多账号 × 多平台数据采集工作流(LLaMA 分析)'}],
+   gallery:[{src:'img34.png', cap:'Reddit 舆情监测 N8N 流程(去重 → LLM 风险分级 → 路由)'},{src:'img35.png', cap:'多产品线串行舆情处理 LLM 节点图'},{src:'img36.png', cap:'多账号 × 多平台数据采集工作流(LLaMA 分析)'}]},
 
   {no:'08', flag:false, title:'Apify Actor 上线(TikTok 达人数据)', sub:'零浏览器自动化的低成本抓取', tech:'TikHub API · 断点恢复 · 限流去重',
    intro:'<b>背景:</b>Apify 商店同类 TikTok Actor 都依赖浏览器自动化(无头浏览器、代理池、cookie 模拟),运行成本高昂。本 Actor 反其道而行:用 TikHub API 替代浏览器爬虫,把抓取/破解活全部外包给 TikHub,Apify 端只跑极轻逻辑。<br><br><b>核心能力:</b>仅用 2 个 TikHub 接口(handler_user_profile、fetch_user_post_videos_v3);输入 1-50 个 TikTok 主页链接,自动拉取博主资料并翻完所有公开帖子;内置限流保护(每页 20 条、最多 5 主页并发、每秒 6 次请求、4 次重试);大小写不敏感去重 + 部分成功 + Apify resurrection 恢复。',
