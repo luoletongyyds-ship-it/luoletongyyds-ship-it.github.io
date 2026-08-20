@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<script>document.documentElement.classList.add('js');</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>罗乐桐 · AI 社媒策划 / 海外社媒运营</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -107,9 +108,10 @@
   .sec-head h2 .it{font-style:italic;font-weight:700;}
   .sec-head .lead{margin-top:20px;font-size:17px;color:var(--ink-2);max-width:700px;line-height:1.8;}
 
-  /* ============ Reveal ============ */
-  .reveal{opacity:0;transform:translateY(40px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:calc(var(--i,0)*90ms);}
-  .reveal.in{opacity:1;transform:none;}
+  /* ============ Reveal (默认可见,仅当 JS 就绪后才隐藏做入场动画) ============ */
+  .reveal{opacity:1;transform:none;transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:calc(var(--i,0)*90ms);}
+  html.js .reveal:not(.in){opacity:0;transform:translateY(40px);}
+  html.js .reveal.in,.reveal.in{opacity:1;transform:none;}
 
   /* ============ Cards ============ */
   .cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
@@ -787,6 +789,10 @@ const PROJECTS = [
   els.forEach(el=>{
     if(!el.classList.contains('in')) io.observe(el);
   });
+  // 终极兜底:2.5 秒后任何还没显示的 reveal 强制可见(防 IO 失效 / 浏览器后台 / print 模式)
+  setTimeout(()=>{
+    document.querySelectorAll('.reveal:not(.in)').forEach(el=>el.classList.add('in'));
+  }, 2500);
 })();
 
 /* ============ Spotlight hover ============ */
